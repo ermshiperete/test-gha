@@ -2,13 +2,16 @@ name: 'Dispatch testing'
 on:
   workflow_dispatch:
   repository_dispatch:
-   types: ['commit']
+   types: ['build']
 
 jobs:
   build:
    name: Run test script
    runs-on: ubuntu-latest
    steps:
+    - name: Do Something Based On Triggered Event Data
+      run: 'echo "Triggered event text: ${{ github.event.client_payload.text }}"'
+
     - name: Checkout
       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b #v3.0.2
 
