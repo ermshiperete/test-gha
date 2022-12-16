@@ -36,6 +36,7 @@ jobs:
           echo ":ship: **Release build of ${{ github.event.client_payload.branch }} branch (${{ github.event.client_payload.ref}}), version ${{ steps.version_step.outputs.VERSION }}**" >> $GITHUB_STEP_SUMMARY
         fi
         echo "" >> $GITHUB_STEP_SUMMARY
+        echo "github.event.event_type=${{github.event.event_type}}" >> $GITHUB_STEP_SUMMARY
 
   binary_packages:
     name: Build binary packages
