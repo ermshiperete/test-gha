@@ -1,0 +1,72 @@
+name: "Ubuntu packaging"
+on:
+  repository_dispatch:
+    types: ['deb-packaging']
+
+jobs:
+  sourcepackage:
+    name: Build source package
+    runs-on: ubuntu-22.04
+    outputs:
+      VERSION: ${{ steps.version_step.outputs.VERSION }}
+      PRERELEASE_TAG: ${{ steps.prerelease_tag.outputs.PRERELEASE_TAG }}
+    steps:
+    - name: Set version as output parameter
+      id: version_step
+      shell: bash
+      run: |
+        echo "VERSION=17.0.99" >> $GITHUB_OUTPUT
+
+    - name: Set prerelease tag as output parameter
+      id: prerelease_tag
+      shell: bash
+      run: |
+        if [ "${{ github.event.client_payload.isTestBuild }}" == "true" ]; then
+          PRERELEASE_TAG="~${{ github.event.client_payload.branch }}-$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT"
+        else
+          PRERELEASE_TAG=""
+        fi
+        echo "PRERELEASE_TAG=$PRERELEASE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Output which branch or PR we're building plus name of .dsc file
+      run: |
+        if [ "${{ github.event.client_payload.isTestBuild }}" == "true" ]; then
+          echo ":checkered_flag: **Test build of version ${{ steps.version_step.outputs.VERSION }} for ${{ github.event.client_payload.branch }}**" >> $GITHUB_STEP_SUMMARY
+        else
+          echo ":ship: **Release build of ${{ github.event.client_payload.branch }} branch (${{ github.event.client_payload.ref}}), version ${{ steps.version_step.outputs.VERSION }}**" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+  binary_packages:
+    name: Build binary packages
+    needs: sourcepackage
+    strategy:
+      fail-fast: true
+      matrix:
+        dist: [focal, jammy, kinetic]
+        arch: [amd64]
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate building
+        run: echo "Build binary packages"
+
+  deb_signing:
+    name: Sign source and binary packages
+    needs: [sourcepackage, binary_packages]
+    runs-on: ubuntu-latest
+    environment: deploy
+    if: github.event.client_payload.isTestBuild == 'false'
+
+    steps:
+      - name: Sign packages
+        run: "Simulate signing packages"
+
+  api_verification:
+    name: Verify API for libkmnkbp0.so
+    needs: [sourcepackage, binary_packages]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Verify API
+      run: echo "Simulate verify API"
