@@ -11,10 +11,22 @@ jobs:
       VERSION: ${{ steps.version_step.outputs.VERSION }}
       PRERELEASE_TAG: ${{ steps.prerelease_tag.outputs.PRERELEASE_TAG }}
     steps:
+    - name: Set status pending
+      run: |
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          /repos/$GITHUB_REPOSITORY/statuses/${{ github.event.client_payload.ref}} \
+          -f state='pending' \
+        -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+        -f description='Debian packaging started' \
+        -f context='continuous-integration/deb-packaging'
+
     - name: Set version as output parameter
       id: version_step
       shell: bash
       run: |
+        echo "::notice::Foo"
         echo "VERSION=17.0.99" >> $GITHUB_OUTPUT
 
     - name: Set prerelease tag as output parameter
@@ -63,3 +75,38 @@ jobs:
     steps:
     - name: Verify API
       run: echo "Simulate verify API"
+
+  set_status:
+    name: Set result status
+    needs: [sourcepackage, binary_packages, deb_signing, api_verification]
+    runs-on: ubuntu-latest
+    if: ${{ always() && github.event.client_payload.isTestBuild == 'true' }}
+    steps:
+    - name: Set result variable
+      run: |
+        if [ ${{ success() }} ]; then
+          RESULT=success
+          MSG="Package build succeeded"
+        elif [ ${{ cancelled() }} ]; then
+          RESULT=error
+          MSG="Package build cancelled"
+        elif [ ${{ failure() }} ]; then
+          RESULT=failure
+          MSG="Package build failed"
+        else
+          RESULT=error
+          MSG="Unknown error"
+        fi
+        echo "RESULT=$RESULT" >> $GITHUB_ENV
+        echo "MSG=$MSG" >> $GITHUB_ENV
+
+    - name: Set status finished
+      run: |
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          /repos/$GITHUB_REPOSITORY/statuses/${{ github.event.client_payload.ref}} \
+          -f state="$RESULT" \
+        -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+        -f description="$MSG" \
+        -f context='continuous-integration/deb-packaging'
