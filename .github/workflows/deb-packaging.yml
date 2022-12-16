@@ -1,7 +1,7 @@
 name: "Ubuntu packaging"
 on:
   repository_dispatch:
-    types: ['deb-packaging']
+    types: ['release-build', 'pr-build']
 
 jobs:
   sourcepackage:
@@ -21,7 +21,7 @@ jobs:
       id: prerelease_tag
       shell: bash
       run: |
-        if [ "${{ github.event.client_payload.isTestBuild }}" == "true" ]; then
+        if [ "${{ github.event.event_type }}" == "pr-build" ]; then
           PRERELEASE_TAG="~${{ github.event.client_payload.branch }}-$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT"
         else
           PRERELEASE_TAG=""
@@ -30,7 +30,7 @@ jobs:
 
     - name: Output which branch or PR we're building plus name of .dsc file
       run: |
-        if [ "${{ github.event.client_payload.isTestBuild }}" == "true" ]; then
+        if [ "${{ github.event.event_type}}" == "pr-build" ]; then
           echo ":checkered_flag: **Test build of version ${{ steps.version_step.outputs.VERSION }} for ${{ github.event.client_payload.branch }}**" >> $GITHUB_STEP_SUMMARY
         else
           echo ":ship: **Release build of ${{ github.event.client_payload.branch }} branch (${{ github.event.client_payload.ref}}), version ${{ steps.version_step.outputs.VERSION }}**" >> $GITHUB_STEP_SUMMARY
@@ -50,7 +50,7 @@ jobs:
     needs: [sourcepackage, binary_packages]
     runs-on: ubuntu-latest
     environment: deploy
-    if: github.event.client_payload.isTestBuild == 'false'
+    if: github.event.event_type == 'release-build'
 
     steps:
       - name: Sign packages
