@@ -82,25 +82,25 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ always() && github.event.client_payload.isTestBuild == 'true' }}
     steps:
-    - name: Set result variable
+    - name: Set success
+      if: success()
       run: |
-        if [ ${{ success() }} ]; then
-          RESULT=success
-          MSG="Package build succeeded"
-        elif [ ${{ cancelled() }} ]; then
-          RESULT=error
-          MSG="Package build cancelled"
-        elif [ ${{ failure() }} ]; then
-          RESULT=failure
-          MSG="Package build failed"
-        else
-          RESULT=error
-          MSG="Unknown error"
-        fi
-        echo "RESULT=$RESULT" >> $GITHUB_ENV
-        echo "MSG=$MSG" >> $GITHUB_ENV
+        echo "RESULT=success" >> $GITHUB_ENV
+        echo "MSG=Package build succeeded" >> $GITHUB_ENV
 
-    - name: Set status finished
+    - name: Set cancelled
+      if: cancelled()
+      run: |
+        echo "RESULT=error" >> $GITHUB_ENV
+        echo "MSG=Package build cancelled" >> $GITHUB_ENV
+
+    - name: Set failure
+      if: failure()
+      run: |
+        echo "RESULT=failure" >> $GITHUB_ENV
+        echo "MSG=Package build failed" >> $GITHUB_ENV
+
+    - name: Set final status
       run: |
         gh api \
           --method POST \
