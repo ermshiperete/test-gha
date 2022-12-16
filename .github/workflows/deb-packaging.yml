@@ -21,7 +21,7 @@ jobs:
       id: prerelease_tag
       shell: bash
       run: |
-        if [ "${{ github.event.event_type }}" == "pr-build" ]; then
+        if [ "${{ github.event.client_payload.isTestBuild }}" == "true" ]; then
           PRERELEASE_TAG="~${{ github.event.client_payload.branch }}-$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT"
         else
           PRERELEASE_TAG=""
@@ -30,13 +30,11 @@ jobs:
 
     - name: Output which branch or PR we're building plus name of .dsc file
       run: |
-        if [ "${{ github.event.event_type}}" == "pr-build" ]; then
+        if [ "${{ github.event.client_payload.isTestBuild }}" == "true" ]; then
           echo ":checkered_flag: **Test build of version ${{ steps.version_step.outputs.VERSION }} for ${{ github.event.client_payload.branch }}**" >> $GITHUB_STEP_SUMMARY
         else
           echo ":ship: **Release build of ${{ github.event.client_payload.branch }} branch (${{ github.event.client_payload.ref}}), version ${{ steps.version_step.outputs.VERSION }}**" >> $GITHUB_STEP_SUMMARY
         fi
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "github.event.event_type=${{github.event.event_type}}" >> $GITHUB_STEP_SUMMARY
 
   binary_packages:
     name: Build binary packages
@@ -51,7 +49,7 @@ jobs:
     needs: [sourcepackage, binary_packages]
     runs-on: ubuntu-latest
     environment: deploy
-    if: github.event.event_type == 'release-build'
+    if: github.event.client_payload.isTestBuild == 'false'
 
     steps:
       - name: Sign packages
