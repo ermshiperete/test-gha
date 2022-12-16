@@ -4,7 +4,7 @@ on:
     types: ['release-build', 'pr-build']
 env:
   GH_TOKEN: ${{ github.token }}
-  COLOR_GREEN: "\e[32"
+  COLOR_GREEN: "\e[32m"
 
 jobs:
   sourcepackage:
