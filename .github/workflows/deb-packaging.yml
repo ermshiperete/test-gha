@@ -41,6 +41,7 @@ jobs:
       shell: bash
       run: |
         echo "${COLOR_GREEN}Foo"
+        echo "No color?"
         echo "VERSION=17.0.99" >> $GITHUB_OUTPUT
 
     - name: Set prerelease tag as output parameter
