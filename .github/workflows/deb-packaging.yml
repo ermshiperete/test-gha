@@ -4,6 +4,7 @@ on:
     types: ['release-build', 'pr-build']
 env:
   GH_TOKEN: ${{ github.token }}
+  COLOR_GREEN: "$(tput setaf 2)"
 
 jobs:
   sourcepackage:
@@ -19,11 +20,11 @@ jobs:
       with:
         ref: '${{ github.event.client_payload.ref }}'
 
-    - name: Set status pending
+    - name: Set pending status
       id: set_status
       if: github.event.client_payload.isTestBuild == 'true'
       run: |
-        echo "Hello world"
+        echo "${COLOR_GREEN}Hello world"
         GIT_SHA=$(git rev-parse HEAD)
         echo "GIT_SHA=$GIT_SHA" >> $GITHUB_OUTPUT
         gh api \
@@ -39,7 +40,7 @@ jobs:
       id: version_step
       shell: bash
       run: |
-        echo "::notice::Foo"
+        echo "${COLOR_GREEN}Foo"
         echo "VERSION=17.0.99" >> $GITHUB_OUTPUT
 
     - name: Set prerelease tag as output parameter
