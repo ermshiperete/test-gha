@@ -40,12 +40,6 @@ jobs:
   binary_packages:
     name: Build binary packages
     needs: sourcepackage
-    strategy:
-      fail-fast: true
-      matrix:
-        dist: [focal, jammy, kinetic]
-        arch: [amd64]
-
     runs-on: ubuntu-latest
     steps:
       - name: Simulate building
@@ -60,7 +54,7 @@ jobs:
 
     steps:
       - name: Sign packages
-        run: "Simulate signing packages"
+        run: echo "Simulate signing packages"
 
   api_verification:
     name: Verify API for libkmnkbp0.so
