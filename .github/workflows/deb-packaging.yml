@@ -108,7 +108,7 @@ jobs:
         echo "MSG=Package build cancelled" >> $GITHUB_ENV
 
     - name: Set failure
-      if: needs*.result == 'failure'
+      if: needs.*.result == 'failure'
       run: |
         echo "RESULT=failure" >> $GITHUB_ENV
         echo "MSG=Package build failed" >> $GITHUB_ENV
