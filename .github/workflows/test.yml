@@ -1,7 +1,9 @@
 name: 'Dispatch testing'
+run-name: '${{ github.actor }} is learning GitHub Actions'
 on:
   repository_dispatch:
-   types: ['Dispatch testing']
+    types: ['Dispatch testing']
+  workflow_dispatch:
 
 jobs:
   build:
