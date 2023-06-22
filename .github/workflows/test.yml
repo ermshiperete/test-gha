@@ -21,3 +21,13 @@ jobs:
     - name: Run script
       run: |
         ./build.sh
+
+    - name: Test docker
+      uses: ermshiperete/test-gha-action@0ab3acd8e7949da4383bd9dffce8a8ea8e792fc9
+      with:
+        dist: "focal"
+        platform: "i386"
+        source_dir: "src_dir_foo"
+        sourcepackage: "my-src-pkg.1.0-1.dsc"
+        prerelease_tag: "helloworld"
+        enable_pso: "false"

@@ -1,7 +1,8 @@
 name: "Ubuntu packaging"
 on:
-  repository_dispatch:
-    types: ['release-build: *', 'pr-build: *']
+  workflow_dispatch:
+#  repository_dispatch:
+#    types: ['release-build: *', 'pr-build: *']
 env:
   GH_TOKEN: ${{ github.token }}
   COLOR_GREEN: "\e[32m"
