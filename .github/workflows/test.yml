@@ -27,7 +27,7 @@ jobs:
       with:
         dist: "focal"
         platform: "i386"
-        source_dir: "$GITHUB_WORKSPACE"
+        source_dir: "${{github.workspace}}"
         sourcepackage: "my-src-pkg.1.0-1.dsc"
         prerelease_tag: "helloworld"
         enable_pso: "false"
