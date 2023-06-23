@@ -23,7 +23,7 @@ jobs:
         ./build.sh
 
     - name: Test docker
-      uses: ermshiperete/test-gha-action@eb35adbd2353b2c44011ac89dcdc39a558fef087
+      uses: ermshiperete/test-gha-action@f4e18d14ef90d754da9ed52943764ee5b4d2ad4d
       with:
         dist: "focal"
         platform: "amd64"
