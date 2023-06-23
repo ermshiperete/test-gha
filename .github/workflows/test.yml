@@ -26,7 +26,7 @@ jobs:
       uses: ermshiperete/test-gha-action@47dd0382768a344cd3c1a3fceb9dd8caae4355d5
       with:
         dist: "focal"
-        platform: "amd64"
+        platform: "i386"
         source_dir: "${{github.workspace}}"
         sourcepackage: "my-src-pkg.1.0-1.dsc"
         prerelease_tag: "helloworld"
