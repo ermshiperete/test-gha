@@ -26,7 +26,7 @@ jobs:
       uses: ermshiperete/test-gha-action@1428636af97d5189e3f782da79891511b4da99eb
       with:
         flavor: "debian"
-        dist: "latest"
+        dist: "bookworm"
         platform: "i386"
         source_dir: "${{github.workspace}}"
         sourcepackage: "my-src-pkg.1.0-1.dsc"
