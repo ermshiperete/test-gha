@@ -26,10 +26,11 @@ jobs:
       uses: ermshiperete/test-gha-action@59ab1f7310fdc4290fea2acc36dc0bd0f6c71cde
       with:
         flavor: "debian"
-        dist: "bookworm"
+        dist: "latest"
         platform: "i386"
         source_dir: "${{github.workspace}}"
         sourcepackage: "my-src-pkg.1.0-1.dsc"
         prerelease_tag: "helloworld"
-        enable_pso: "false"
+        enable_llso: "false"
+        enable_pso: "true"
         github_token: "${{secrets.GITHUB_TOKEN}}"
