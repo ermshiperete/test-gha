@@ -27,7 +27,7 @@ jobs:
       with:
         flavor: "ubuntu"
         dist: "latest"
-        platform: "i386"
+        platform: "amd64"
         source_dir: "${{github.workspace}}"
         sourcepackage: "my-src-pkg.1.0-1.dsc"
         prerelease_tag: "helloworld"
