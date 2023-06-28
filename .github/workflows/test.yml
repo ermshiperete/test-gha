@@ -23,9 +23,9 @@ jobs:
         ./build.sh
 
     - name: Test docker
-      uses: ermshiperete/test-gha-action@59ab1f7310fdc4290fea2acc36dc0bd0f6c71cde
+      uses: ermshiperete/test-gha-action@04d5947bfb5af9fbe4bb4a2d4ed521d73fb97f8c
       with:
-        flavor: "debian"
+        flavor: "ubuntu"
         dist: "latest"
         platform: "i386"
         source_dir: "${{github.workspace}}"
