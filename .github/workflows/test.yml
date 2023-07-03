@@ -23,7 +23,7 @@ jobs:
         ./build.sh
 
     - name: Test docker
-      uses: ermshiperete/test-gha-action@2e63c9ef42d3beec9542e722217bc522236a901f
+      uses: ermshiperete/test-gha-action@5ba795062426377ab77010a99d7e2f41eb5ec4a6
       with:
         flavor: "debian"
         dist: "bookworm"
