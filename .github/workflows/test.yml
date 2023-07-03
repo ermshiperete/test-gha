@@ -23,7 +23,7 @@ jobs:
         ./build.sh
 
     - name: Test docker
-      uses: ermshiperete/test-gha-action@ab9d70c3c313d3575355d6bba0c0a0d92af55cd7
+      uses: ermshiperete/test-gha-action@bd75a24f42b7fe5f51ae6ca9114af108d85bc24c
       with:
         flavor: "debian"
         dist: "latest"
@@ -33,4 +33,3 @@ jobs:
         prerelease_tag: "helloworld"
         enable_llso: "false"
         enable_pso: "true"
-        github_token: "${{secrets.GITHUB_TOKEN}}"
