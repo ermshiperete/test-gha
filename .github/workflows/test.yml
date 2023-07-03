@@ -23,11 +23,11 @@ jobs:
         ./build.sh
 
     - name: Test docker
-      uses: ermshiperete/test-gha-action@068177618e272f0ca565d69cbbdfbce1fdf77ea3
+      uses: ermshiperete/test-gha-action@fc10409213c3280dd4ab16de77b9f8ccb93ba6a8
       with:
         flavor: "debian"
         dist: "bookworm"
-        platform: "amd64"
+        platform: "i386"
         source_dir: "${{github.workspace}}"
         sourcepackage: "my-src-pkg.1.0-1.dsc"
         prerelease_tag: "helloworld"
