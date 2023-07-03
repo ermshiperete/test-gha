@@ -25,9 +25,9 @@ jobs:
     - name: Test docker
       uses: ermshiperete/test-gha-action@f316dbb5034aa083249150751d7f283ff79b735c
       with:
-        flavor: "debian"
-        dist: "bookworm"
-        platform: "i386"
+        flavor: "ubuntu"
+        dist: "latest"
+        platform: "amd64"
         source_dir: "${{github.workspace}}"
         sourcepackage: "my-src-pkg.1.0-1.dsc"
         prerelease_tag: "helloworld"
