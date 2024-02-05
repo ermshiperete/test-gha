@@ -10,19 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # - name: Download Artifacts
-    #   uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
-    #   with:
-    #     path: artifacts
-    #     merge-multiple: true
-
-    - name: Restore artifacts
-      id: artifacts
-      uses: actions/cache/restore@v4
+    - name: Download Artifacts
+      uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
       with:
-        path: |
-          artifacts
-        key: artifacts-key
+        path: artifacts
+        merge-multiple: true
+
+    # - name: Restore artifacts
+    #   id: artifacts
+    #   uses: actions/cache/restore@v4
+    #   with:
+    #     path: |
+    #       artifacts
+    #     key: artifacts-key
 
     - name: Verify API
       run: |

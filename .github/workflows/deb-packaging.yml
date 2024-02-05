@@ -107,7 +107,7 @@ jobs:
     name: Set result status
     needs: [sourcepackage, binary_packages, deb_signing]
     runs-on: ubuntu-latest
-    if: ${{ always() && github.event.client_payload.isTestBuild == 'true' }}
+    # if: ${{ always() && github.event.client_payload.isTestBuild == 'true' }}
     steps:
     - name: Set success
       if: needs.sourcepackage.result == 'success' && needs.binary_packages.result == 'success' && (needs.deb_signing.result == 'success' || needs.deb_signing.result == 'skipped')
