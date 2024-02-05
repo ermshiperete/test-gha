@@ -84,6 +84,13 @@ jobs:
             !artifacts/keyman-srcpkg/
         if: always()
 
+      - name: Save artifacts
+        id: artifacts
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            artifacts
+          key: artifacts-key
 
   deb_signing:
     name: Sign source and binary packages
@@ -95,11 +102,6 @@ jobs:
     steps:
       - name: Sign packages
         run: echo "Simulate signing packages"
-
-  call_api_verification:
-    name: Verify API for libkmnkbp0.so
-    needs: [sourcepackage, binary_packages]
-    uses: ./.github/workflows/api-verfication.yml
 
   set_status:
     name: Set result status
