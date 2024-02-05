@@ -20,11 +20,14 @@ jobs:
         restore-keys: artifacts-key-
 
     - name: Read environment
+      id: environment_step
       run: |
         cat artifacts/env >> $GITHUB_ENV
+        cat artifacts/env >> $GITHUB_OUTPUT
 
     - name: Verify API
       run: |
         echo "Simulate verify API"
         echo "GITHUB_RUN_ID: $(cat artifacts/README.md)"
         echo "My GITHUB_RUN_ID: ${GITHUB_RUN_ID}, FOO=${FOO}, GIT_SHA=${GIT_SHA}"
+        echo "with output: FOO=${{ steps.environment_step.outputs.FOO }} running on $(lsb_release -c -s)"
