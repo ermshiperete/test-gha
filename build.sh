@@ -2,4 +2,4 @@
 
 git log -1
 
-echo "Hello three!"
+echo "Hello four!"
