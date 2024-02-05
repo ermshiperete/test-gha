@@ -70,7 +70,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Simulate building
-        run: echo "Build binary packages"
+        run: |
+          echo "Build binary packages: GITHUB_RUN_ID=${GITHUB_RUN_ID}"
+          mkdir artifacts
+          echo "${GITHUB_RUN_ID}" > artifacts/README.md
+
+      - name: Store binary packages
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.3.0
+        with:
+          name: keyman-binarypkgs-jammy_amd64
+          path: |
+            artifacts/*
+            !artifacts/keyman-srcpkg/
+        if: always()
+
 
   deb_signing:
     name: Sign source and binary packages
@@ -83,14 +96,10 @@ jobs:
       - name: Sign packages
         run: echo "Simulate signing packages"
 
-  api_verification:
+  call_api_verification:
     name: Verify API for libkmnkbp0.so
     needs: [sourcepackage, binary_packages]
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Verify API
-      run: echo "Simulate verify API"
+    uses: ./.github/workflows/api-verfication.yml
 
   set_status:
     name: Set result status

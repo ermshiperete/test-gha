@@ -1,0 +1,22 @@
+name: "API Verification"
+on:
+  workflow_call
+
+jobs:
+  api_verification:
+    name: Verify API for libkmnkbp0.so
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download Artifacts
+      uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+      with:
+        path: artifacts
+        merge-multiple: true
+
+    - name: Verify API
+      run: |
+        echo "Simulate verify API"
+        echo "GITHUB_RUN_ID: $(cat artifacts/README.md)"
+
+
