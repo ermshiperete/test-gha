@@ -10,23 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Download Artifacts
-      uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+    - name: Restore artifacts
+      id: artifacts
+      uses: actions/cache/restore@v4
       with:
-        name: keyman-binarypkgs-jammy_amd64
-        path: artifacts
-        merge-multiple: true
+        path: |
+          artifacts
+        key: artifacts-key
 
-    # - name: Restore artifacts
-    #   id: artifacts
-    #   uses: actions/cache/restore@v4
-    #   with:
-    #     path: |
-    #       artifacts
-    #     key: artifacts-key
+    - name: Read environment
+      run: |
+        cat artifacts/env >> $GITHUB_ENV
 
     - name: Verify API
       run: |
         echo "Simulate verify API"
         echo "GITHUB_RUN_ID: $(cat artifacts/README.md)"
-        echo "My GITHUB_RUN_ID: ${GITHUB_RUN_ID}"
+        echo "My GITHUB_RUN_ID: ${GITHUB_RUN_ID}, FOO=${FOO}, GIT_SHA=${GIT_SHA}"

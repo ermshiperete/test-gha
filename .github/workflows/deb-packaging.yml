@@ -84,6 +84,11 @@ jobs:
             !artifacts/keyman-srcpkg/
         if: always()
 
+      - name: Set environment
+        run: |
+          echo "FOO=bla" > artifacts/env
+          echo "GIT_SHA=${{ needs.sourcepackage.outputs.GIT_SHA }}" >> artifacts/env
+
       - name: Save artifacts
         id: artifacts
         uses: actions/cache/save@v4
