@@ -95,7 +95,7 @@ jobs:
         with:
           path: |
             artifacts
-          key: artifacts-key
+          key: artifacts-key-${GITHUB_RUN_ID}
 
   deb_signing:
     name: Sign source and binary packages

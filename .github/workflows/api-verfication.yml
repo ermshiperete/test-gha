@@ -16,7 +16,8 @@ jobs:
       with:
         path: |
           artifacts
-        key: artifacts-key
+        key: artifacts-key-${GITHUB_RUN_ID}
+        restore-keys: artifacts-key-
 
     - name: Read environment
       run: |
