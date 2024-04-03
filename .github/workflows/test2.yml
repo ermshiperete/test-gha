@@ -20,6 +20,22 @@ jobs:
      - name: Foo
        run: exit 1
 
+  job_matrix:
+    name: A failing matrix job
+    needs: build
+    continue-on-error: true
+    strategy:
+      fail-fast: true
+      matrix:
+        dist: [noble]
+    runs-on: ubuntu-latest
+    steps:
+     - name: Hello
+       run: echo "Hello ${{ matrix.dist }} world!"
+
+     - name: Now fail
+       run: exit 1
+
   job3:
     name: Also succeeds
     needs: build
