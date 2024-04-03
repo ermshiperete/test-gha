@@ -9,7 +9,7 @@ jobs:
    runs-on: ubuntu-latest
    steps:
     - name: Build
-      run: return 0
+      run: exit 0
 
   job2:
     name: Failing job
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Foo
-       run: return 1
+       run: exit 1
 
   job3:
     name: Also succeeds
@@ -25,4 +25,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Build
-       run: return 0
+       run: exit 0
