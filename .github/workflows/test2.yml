@@ -1,0 +1,26 @@
+name: 'Test failures'
+run-name: '${{ github.actor }} is learning GitHub Actions'
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+   name: Succeeding job
+   runs-on: ubuntu-latest
+   steps:
+    - name: Build
+      run: return 0
+
+  job2:
+    name: Failing job
+    runs-on: ubuntu-latest
+    steps:
+     - name: Foo
+       run: return 1
+
+  job3:
+    name: Also succeeds
+    runs-on: ubuntu-latest
+    steps:
+     - name: Build
+       run: return 0
