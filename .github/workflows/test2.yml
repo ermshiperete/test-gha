@@ -13,6 +13,7 @@ jobs:
 
   job2:
     name: Failing job
+    needs: build
     runs-on: ubuntu-latest
     steps:
      - name: Foo
@@ -20,6 +21,7 @@ jobs:
 
   job3:
     name: Also succeeds
+    needs: build
     runs-on: ubuntu-latest
     steps:
      - name: Build
