@@ -10,6 +10,11 @@ jobs:
    steps:
     - name: Build
       run: exit 0
+    - name: Failing
+      continue-on-error: true
+      run: exit 1
+    - name: Output
+      run: echo "Hello world!"
 
   job2:
     name: Failing job
