@@ -90,6 +90,7 @@ jobs:
           echo "FOO=bla" > artifacts/env
           echo "GIT_SHA=${{ needs.sourcepackage.outputs.GIT_SHA }}" >> artifacts/env
           echo "GITHUB_RUN_ID=${GITHUB_RUN_ID}"
+          echo "github.run_id=${{ github.run_id }}"
 
       - name: Save artifacts
         id: artifacts
@@ -97,7 +98,7 @@ jobs:
         with:
           path: |
             artifacts
-          key: artifacts-key-${GITHUB_RUN_ID}
+          key: artifacts-key-${{ github.run_id }}
 
   deb_signing:
     name: Sign source and binary packages
