@@ -22,8 +22,11 @@ jobs:
     - name: Read environment
       id: environment_step
       run: |
+        echo "GITHUB_RUN_ID=${GITHUB_RUN_ID}"
+        ls -al artifacts/
         cat artifacts/env >> $GITHUB_ENV
         cat artifacts/env >> $GITHUB_OUTPUT
+
 
     - name: Verify API
       run: |

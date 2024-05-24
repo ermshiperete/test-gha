@@ -88,6 +88,7 @@ jobs:
         run: |
           echo "FOO=bla" > artifacts/env
           echo "GIT_SHA=${{ needs.sourcepackage.outputs.GIT_SHA }}" >> artifacts/env
+          echo "GITHUB_RUN_ID=${GITHUB_RUN_ID}"
 
       - name: Save artifacts
         id: artifacts
