@@ -74,6 +74,7 @@ jobs:
           echo "Build binary packages: GITHUB_RUN_ID=${GITHUB_RUN_ID}"
           mkdir artifacts
           echo "${GITHUB_RUN_ID}" > artifacts/README.md
+          echo "GITHUB_RUN_ID=${GITHUB_RUN_ID}"
 
       - name: Store binary packages
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.3.0
