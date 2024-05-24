@@ -26,6 +26,11 @@ jobs:
         ls -al artifacts/
         cat artifacts/env >> $GITHUB_ENV
         cat artifacts/env >> $GITHUB_OUTPUT
+        echo "GITHUB_RUN_ID: $(cat artifacts/README.md)"
+        echo "head_commit=${{ github.event.workflow_run.head_commit }}"
+        echo "head_sha=${{ github.event.workflow_run.head_sha}}"
+        echo "event=${{ github.event.workflow_run.event}}"
+        echo "workflow.id=${{ github.event.workflow.id}}"
 
 
     - name: Verify API
