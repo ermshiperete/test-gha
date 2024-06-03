@@ -1,0 +1,23 @@
+name: "Checkout bug #1201"
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Restore artifacts
+      run: |
+        mkdir artifacts/
+        echo "Hello world" > artifacts/hello
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        clean: false
+
+    - name: Verify
+      run: |
+        ls -al
+        ls -al artifacts/
