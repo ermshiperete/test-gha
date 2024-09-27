@@ -1,4 +1,5 @@
 name: "API Verification"
+run-name: "API Verification for ${{ github.ref_name }}"
 on:
  workflow_run:
     workflows: [Ubuntu packaging]
@@ -6,8 +7,11 @@ on:
       - completed
 jobs:
   api_verification:
-    name: Verify API for libkmnkbp0.so
     runs-on: ubuntu-latest
+    outputs:
+      VERSION: ${{ steps.environment_step.outputs.VERSION }}
+      FOO: ${{ steps.environment_step.outputs.FOO }}
+    name: "Verify API for libkmnkbp0.so with FOO=${{ github.job.api_verification.outputs.FOO }} VERSION=${{github.job.api_verification.outputs.VERSION}}, ${{ vars.VERSION }}"
 
     steps:
     - name: Restore artifacts
@@ -31,6 +35,7 @@ jobs:
         echo "head_sha=${{ github.event.workflow_run.head_sha}}"
         echo "event=${{ github.event.workflow_run.event}}"
         echo "workflow.id=${{ github.event.workflow.id}}"
+        echo "VERSION=47.11" >> $GITHUB_OUTPUT
 
 
     - name: Verify API
