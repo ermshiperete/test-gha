@@ -27,40 +27,49 @@ jobs:
 
     - name: Aggressive cleanup
       run: |
-        # Remove Java (JDKs)
-        sudo rm -rf /usr/lib/jvm
+        # # Remove Java (JDKs)
+        # sudo rm -rf /usr/lib/jvm
 
-        # Remove .NET SDKs
-        sudo rm -rf /usr/share/dotnet
+        # # Remove .NET SDKs
+        # sudo rm -rf /usr/share/dotnet
 
-        # Remove Swift toolchain
-        sudo rm -rf /usr/share/swift
+        # # Remove Swift toolchain
+        # sudo rm -rf /usr/share/swift
 
-        # Remove Haskell (GHC)
-        sudo rm -rf /usr/local/.ghcup
+        # # Remove Haskell (GHC)
+        # sudo rm -rf /usr/local/.ghcup
 
-        # Remove Julia
-        sudo rm -rf /usr/local/julia*
+        # # Remove Julia
+        # sudo rm -rf /usr/local/julia*
+
+        df -h
 
         # Remove Android SDKs
         sudo rm -rf /usr/local/lib/android
 
+        df -h
         # Remove Chromium (optional if not using for browser tests)
         sudo rm -rf /usr/local/share/chromium
 
+        df -h
         # Remove Microsoft/Edge and Google Chrome builds
         sudo rm -rf /opt/microsoft /opt/google
 
+        df -h
         # Remove Azure CLI
         sudo rm -rf /opt/az
 
+        df -h
         # Remove PowerShell
         sudo rm -rf /usr/local/share/powershell
 
+        df -h
         # Remove CodeQL and other toolcaches
         sudo rm -rf /opt/hostedtoolcache
 
+        df -h
         docker system prune -af || true
+        df -h
         docker builder prune -af || true
         df -h
 
