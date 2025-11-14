@@ -27,50 +27,63 @@ jobs:
 
     - name: Aggressive cleanup
       run: |
-        # # Remove Java (JDKs)
-        # sudo rm -rf /usr/lib/jvm
+        echo "Before cleanup, disk usage is:"
+        df -h
+        # Remove Java (JDKs)
+        sudo rm -rf /usr/lib/jvm
 
-        # # Remove .NET SDKs
-        # sudo rm -rf /usr/share/dotnet
+        # Remove .NET SDKs
+        sudo rm -rf /usr/share/dotnet
 
-        # # Remove Swift toolchain
-        # sudo rm -rf /usr/share/swift
+        # Remove Swift toolchain
+        sudo rm -rf /usr/share/swift
 
-        # # Remove Haskell (GHC)
-        # sudo rm -rf /usr/local/.ghcup
+        # Remove Haskell (GHC)
+        sudo rm -rf /usr/local/.ghcup
 
-        # # Remove Julia
-        # sudo rm -rf /usr/local/julia*
+        # Remove Julia
+        sudo rm -rf /usr/local/julia*
 
+        echo "After first block, disk usage is:"
         df -h
 
-        # Remove Android SDKs
+        # Remove Android SDKs (frees 12GB)
         sudo rm -rf /usr/local/lib/android
 
+        echo "After removing Android SDKs, disk usage is:"
         df -h
-        # Remove Chromium (optional if not using for browser tests)
+
+        # Remove Chromium (frees 1GB))
         sudo rm -rf /usr/local/share/chromium
 
+        echo "After removing Chromium, disk usage is:"
         df -h
+
         # Remove Microsoft/Edge and Google Chrome builds
         sudo rm -rf /opt/microsoft /opt/google
 
+        echo "After removing Microsoft/Edge and Google Chrome builds, disk usage is:"
         df -h
         # Remove Azure CLI
         sudo rm -rf /opt/az
 
+        echo "After removing Azure CLI, disk usage is:"
         df -h
         # Remove PowerShell
         sudo rm -rf /usr/local/share/powershell
 
+        echo "After removing PowerShell, disk usage is:"
         df -h
         # Remove CodeQL and other toolcaches
         sudo rm -rf /opt/hostedtoolcache
 
+        echo "After removing CodeQL and other toolcaches, disk usage is:"
         df -h
         docker system prune -af || true
+        echo "After Docker system prune, disk usage is:"
         df -h
         docker builder prune -af || true
+        echo "After Docker builder prune, disk usage is:"
         df -h
 
     # - name: Install dependencies
