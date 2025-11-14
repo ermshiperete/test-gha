@@ -30,26 +30,26 @@ jobs:
         echo "Before cleanup, disk usage is:"
         df -h
 
-        # Remove Android SDKs (frees 12GB) ***
-        sudo du -h -s /usr/local/lib/android
+        # Remove Android SDKs (frees 12 GB)
+        # sudo du -h -s /usr/local/lib/android
         sudo rm -rf /usr/local/lib/android
         echo "After removing Android SDKs, disk usage is:"
         df -h
 
-        # Remove Haskell (GHC) (frees 6GB)
-        sudo du -h -s /usr/local/.ghcup
+        # Remove Haskell (GHC) (frees 6.4 GB)
+        # sudo du -h -s /usr/local/.ghcup
         sudo rm -rf /usr/local/.ghcup
         echo "After removing Haskell (GHC), disk usage is:"
         df -h
 
-        # Remove CodeQL and other toolcaches (frees 5GB)
-        sudo du -h -s /opt/hostedtoolcache
+        # Remove CodeQL and other toolcaches (frees 5.8 GB)
+        # sudo du -h -s /opt/hostedtoolcache
         sudo rm -rf /opt/hostedtoolcache
         echo "After removing CodeQL and other toolcaches, disk usage is:"
         df -h
 
-        # Remove .NET SDKs (frees 4GB)
-        sudo du -h -s /usr/share/dotnet
+        # Remove .NET SDKs (frees 4.0 GB)
+        # sudo du -h -s /usr/share/dotnet
         sudo rm -rf /usr/share/dotnet
         echo "After removing .NET SDKs, disk usage is:"
         df -h
