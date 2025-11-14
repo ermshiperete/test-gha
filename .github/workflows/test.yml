@@ -37,7 +37,7 @@ jobs:
         df -h
 
         # Remove Haskell (GHC) (frees 6GB)
-        sudo du -h -s/usr/local/.ghcup
+        sudo du -h -s /usr/local/.ghcup
         sudo rm -rf /usr/local/.ghcup
         echo "After removing Haskell (GHC), disk usage is:"
         df -h
