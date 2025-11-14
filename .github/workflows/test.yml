@@ -13,23 +13,50 @@ jobs:
     - name: Do Something Based On Triggered Event Data
       run: 'echo "Triggered event text: ${{ github.event.client_payload.text }}"'
 
-    - name: Checkout
-      uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b #v3.0.2
-      with:
-        ref: '${{ github.event.client_payload.ref }}'
+    - name: Show disk usage
+      run: df -h
 
-    - name: Run script
+    - name: Top-level directories
+      run: du -h -d1 / | sort -hr | head -n 20
+
+    - name: Detailed file sizes
+      run: find / -type f -exec du -h {} + 2>/dev/null | sort -hr | head -n 1000
+
+    - name: Install dependencies
       run: |
-        ./build.sh
+        sudo apt update
+        sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install autopkgtest qemu-system qemu-utils autodep8 genisoimage python3-distro-info
 
-    - name: Test docker
-      uses: ermshiperete/test-gha-action@eea13944d81e1a279e9eb30286641a7b371a9a21
-      with:
-        flavor: "debian"
-        dist: "bookworm"
-        platform: "i386"
-        source_dir: "${{github.workspace}}"
-        sourcepackage: "my-src-pkg.1.0-1.dsc"
-        prerelease_tag: "helloworld"
-        enable_llso: "false"
-        enable_pso: "true"
+    - name: Show disk usage
+      run: df -h
+
+    - name: Build test image
+      run: |
+        cd "${GITHUB_WORKSPACE}"
+        echo "Building test image for $(lsb_release -c -s)"
+        sudo chown ${USER} /dev/kvm
+        autopkgtest-buildvm-ubuntu-cloud -v --release=$(lsb_release -c -s)
+
+    - name: Show disk usage
+      run: df -h
+
+    # - name: Checkout
+    #   uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b #v3.0.2
+    #   with:
+    #     ref: '${{ github.event.client_payload.ref }}'
+
+    # - name: Run script
+    #   run: |
+    #     ./build.sh
+
+    # - name: Test docker
+    #   uses: ermshiperete/test-gha-action@eea13944d81e1a279e9eb30286641a7b371a9a21
+    #   with:
+    #     flavor: "debian"
+    #     dist: "bookworm"
+    #     platform: "i386"
+    #     source_dir: "${{github.workspace}}"
+    #     sourcepackage: "my-src-pkg.1.0-1.dsc"
+    #     prerelease_tag: "helloworld"
+    #     enable_llso: "false"
+    #     enable_pso: "true"
