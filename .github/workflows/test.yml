@@ -32,19 +32,31 @@ jobs:
         # Remove Java (JDKs)
         sudo rm -rf /usr/lib/jvm
 
+        echo "After removing Java (JDKs), disk usage is:"
+        df -h
+
         # Remove .NET SDKs
         sudo rm -rf /usr/share/dotnet
+
+        echo "After removing .NET SDKs, disk usage is:"
+        df -h
 
         # Remove Swift toolchain
         sudo rm -rf /usr/share/swift
 
+        echo "After removing Swift toolchain, disk usage is:"
+        df -h
+
         # Remove Haskell (GHC)
         sudo rm -rf /usr/local/.ghcup
+
+        echo "After removing Haskell (GHC), disk usage is:"
+        df -h
 
         # Remove Julia
         sudo rm -rf /usr/local/julia*
 
-        echo "After first block, disk usage is:"
+        echo "After removing Julia, disk usage is:"
         df -h
 
         # Remove Android SDKs (frees 12GB)
@@ -53,38 +65,40 @@ jobs:
         echo "After removing Android SDKs, disk usage is:"
         df -h
 
-        # Remove Chromium (frees 1GB))
-        sudo rm -rf /usr/local/share/chromium
+        # # Remove Chromium (frees 1GB))
+        # sudo rm -rf /usr/local/share/chromium
 
-        echo "After removing Chromium, disk usage is:"
-        df -h
+        # echo "After removing Chromium, disk usage is:"
+        # df -h
 
-        # Remove Microsoft/Edge and Google Chrome builds
-        sudo rm -rf /opt/microsoft /opt/google
+        # # Remove Microsoft/Edge and Google Chrome builds (frees 1GB)
+        # sudo rm -rf /opt/microsoft /opt/google
 
-        echo "After removing Microsoft/Edge and Google Chrome builds, disk usage is:"
-        df -h
-        # Remove Azure CLI
-        sudo rm -rf /opt/az
+        # echo "After removing Microsoft/Edge and Google Chrome builds, disk usage is:"
+        # df -h
 
-        echo "After removing Azure CLI, disk usage is:"
-        df -h
-        # Remove PowerShell
-        sudo rm -rf /usr/local/share/powershell
+        # # Remove Azure CLI (frees < 1GB)
+        # sudo rm -rf /opt/az
 
-        echo "After removing PowerShell, disk usage is:"
-        df -h
-        # Remove CodeQL and other toolcaches
+        # echo "After removing Azure CLI, disk usage is:"
+        # df -h
+
+        # # Remove PowerShell (frees 2GB)
+        # sudo rm -rf /usr/local/share/powershell
+        # echo "After removing PowerShell, disk usage is:"
+        # df -h
+
+        # Remove CodeQL and other toolcaches (frees 5GB)
         sudo rm -rf /opt/hostedtoolcache
-
         echo "After removing CodeQL and other toolcaches, disk usage is:"
         df -h
-        docker system prune -af || true
-        echo "After Docker system prune, disk usage is:"
-        df -h
-        docker builder prune -af || true
-        echo "After Docker builder prune, disk usage is:"
-        df -h
+
+        # docker system prune -af || true
+        # echo "After Docker system prune, disk usage is:"
+        # df -h
+        # docker builder prune -af || true
+        # echo "After Docker builder prune, disk usage is:"
+        # df -h
 
     # - name: Install dependencies
     #   run: |
