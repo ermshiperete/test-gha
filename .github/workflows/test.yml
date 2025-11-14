@@ -29,69 +29,65 @@ jobs:
       run: |
         echo "Before cleanup, disk usage is:"
         df -h
-        # Remove Java (JDKs)
-        sudo rm -rf /usr/lib/jvm
 
-        echo "After removing Java (JDKs), disk usage is:"
-        df -h
-
-        # Remove .NET SDKs
-        sudo rm -rf /usr/share/dotnet
-
-        echo "After removing .NET SDKs, disk usage is:"
-        df -h
-
-        # Remove Swift toolchain
-        sudo rm -rf /usr/share/swift
-
-        echo "After removing Swift toolchain, disk usage is:"
-        df -h
-
-        # Remove Haskell (GHC)
-        sudo rm -rf /usr/local/.ghcup
-
-        echo "After removing Haskell (GHC), disk usage is:"
-        df -h
-
-        # Remove Julia
-        sudo rm -rf /usr/local/julia*
-
-        echo "After removing Julia, disk usage is:"
-        df -h
-
-        # Remove Android SDKs (frees 12GB)
+        # Remove Android SDKs (frees 12GB) ***
+        sudo du -h -s /usr/local/lib/android
         sudo rm -rf /usr/local/lib/android
-
         echo "After removing Android SDKs, disk usage is:"
         df -h
 
+        # Remove Haskell (GHC) (frees 6GB)
+        sudo du -h -s/usr/local/.ghcup
+        sudo rm -rf /usr/local/.ghcup
+        echo "After removing Haskell (GHC), disk usage is:"
+        df -h
+
+        # Remove CodeQL and other toolcaches (frees 5GB)
+        sudo du -h -s /opt/hostedtoolcache
+        sudo rm -rf /opt/hostedtoolcache
+        echo "After removing CodeQL and other toolcaches, disk usage is:"
+        df -h
+
+        # Remove .NET SDKs (frees 4GB)
+        sudo du -h -s /usr/share/dotnet
+        sudo rm -rf /usr/share/dotnet
+        echo "After removing .NET SDKs, disk usage is:"
+        df -h
+
+        # # Remove Swift toolchain (frees 3GB)
+        # sudo rm -rf /usr/share/swift
+        # echo "After removing Swift toolchain, disk usage is:"
+        # df -h
+
+        # # # Remove PowerShell (frees 2GB)
+        # # sudo rm -rf /usr/local/share/powershell
+        # # echo "After removing PowerShell, disk usage is:"
+        # # df -h
+
+        # # Remove Java (JDKs) (frees 2GB)
+        # sudo rm -rf /usr/lib/jvm
+        # echo "After removing Java (JDKs), disk usage is:"
+        # df -h
+
+        # # Remove Julia (frees 1GB)
+        # sudo rm -rf /usr/local/julia*
+        # echo "After removing Julia, disk usage is:"
+        # df -h
+
         # # Remove Chromium (frees 1GB))
         # sudo rm -rf /usr/local/share/chromium
-
         # echo "After removing Chromium, disk usage is:"
         # df -h
 
         # # Remove Microsoft/Edge and Google Chrome builds (frees 1GB)
         # sudo rm -rf /opt/microsoft /opt/google
-
         # echo "After removing Microsoft/Edge and Google Chrome builds, disk usage is:"
         # df -h
 
         # # Remove Azure CLI (frees < 1GB)
         # sudo rm -rf /opt/az
-
         # echo "After removing Azure CLI, disk usage is:"
         # df -h
-
-        # # Remove PowerShell (frees 2GB)
-        # sudo rm -rf /usr/local/share/powershell
-        # echo "After removing PowerShell, disk usage is:"
-        # df -h
-
-        # Remove CodeQL and other toolcaches (frees 5GB)
-        sudo rm -rf /opt/hostedtoolcache
-        echo "After removing CodeQL and other toolcaches, disk usage is:"
-        df -h
 
         # docker system prune -af || true
         # echo "After Docker system prune, disk usage is:"
