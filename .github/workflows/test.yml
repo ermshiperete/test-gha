@@ -16,29 +16,32 @@ jobs:
     - name: Show disk usage
       run: df -h
 
-    - name: Top-level directories
-      run: du -h -d1 / | sort -hr | head -n 20
+    # - name: Top-level directories
+    #   run: sudo du -h -d1 / | sort -hr | head -n 20
 
-    - name: Detailed file sizes
-      run: find / -type f -exec du -h {} + 2>/dev/null | sort -hr | head -n 1000
+    # - name: Detailed file sizes
+    #   run: sudo find / -type f -exec du -h {} + 2>/dev/null | sort -hr | head -n 1000
 
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install autopkgtest qemu-system qemu-utils autodep8 genisoimage python3-distro-info
+    - name: Show installed packages
+      run: dpkg -l
 
-    - name: Show disk usage
-      run: df -h
+    # - name: Install dependencies
+    #   run: |
+    #     sudo apt update
+    #     sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install autopkgtest qemu-system qemu-utils autodep8 genisoimage python3-distro-info
 
-    - name: Build test image
-      run: |
-        cd "${GITHUB_WORKSPACE}"
-        echo "Building test image for $(lsb_release -c -s)"
-        sudo chown ${USER} /dev/kvm
-        autopkgtest-buildvm-ubuntu-cloud -v --release=$(lsb_release -c -s)
+    # - name: Show disk usage
+    #   run: df -h
 
-    - name: Show disk usage
-      run: df -h
+    # - name: Build test image
+    #   run: |
+    #     cd "${GITHUB_WORKSPACE}"
+    #     echo "Building test image for $(lsb_release -c -s)"
+    #     sudo chown ${USER} /dev/kvm
+    #     autopkgtest-buildvm-ubuntu-cloud -v --release=$(lsb_release -c -s)
+
+    # - name: Show disk usage
+    #   run: df -h
 
     # - name: Checkout
     #   uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b #v3.0.2
