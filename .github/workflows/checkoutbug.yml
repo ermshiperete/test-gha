@@ -22,4 +22,4 @@ jobs:
     - name: Verify
       run: |
         ls -al
-        ls -al artifacts/
+        [ -d artifacts ] && ls -al artifacts/
