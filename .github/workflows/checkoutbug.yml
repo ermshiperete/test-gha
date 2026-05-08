@@ -1,5 +1,7 @@
 name: "Checkout bug #1201"
 on:
+  pull_request:
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 jobs:
   test:
