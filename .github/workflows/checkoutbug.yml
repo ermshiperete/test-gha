@@ -23,3 +23,11 @@ jobs:
       run: |
         ls -al
         [ -d artifacts ] && ls -al artifacts/
+
+  secondTest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Do something
+      run: |
+        echo "Hello world!"
