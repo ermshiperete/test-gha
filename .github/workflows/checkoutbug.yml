@@ -8,16 +8,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Restore artifacts
-      run: |
-        mkdir artifacts/
-        echo "Hello world" > artifacts/hello
-
     - name: Checkout
       uses: actions/checkout@v6
       with:
         fetch-depth: 0
         clean: false
+
+    - name: Restore artifacts
+      run: |
+        mkdir artifacts/
+        echo "Hello world" > artifacts/hello
 
     - name: Verify
       run: |
